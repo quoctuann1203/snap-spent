@@ -9,20 +9,22 @@ afterEach(cleanup);
 
 const onSubmitMock: jest.Mock<LoginFormProps['onSubmit']> = jest.fn();
 
-describe('loginForm Form ', () => {
+describe('loginForm', () => {
   it('renders correctly', async () => {
     setup(<LoginForm />);
-    expect(await screen.findByTestId('form-title')).toBeOnTheScreen();
+    expect(await screen.findByTestId('email-input')).toBeOnTheScreen();
+    expect(screen.getByTestId('password-input')).toBeOnTheScreen();
+    expect(screen.getByTestId('login-button')).toBeOnTheScreen();
   });
 
   it('should display required error when values are empty', async () => {
     const { user } = setup(<LoginForm />);
 
     const button = screen.getByTestId('login-button');
-    expect(screen.queryByText(/Email is required/i)).not.toBeOnTheScreen();
+    expect(screen.queryByText(/Email là bắt buộc/i)).not.toBeOnTheScreen();
     await user.press(button);
-    expect(await screen.findByText(/Email is required/i)).toBeOnTheScreen();
-    expect(screen.getByText(/Password is required/i)).toBeOnTheScreen();
+    expect(await screen.findByText(/Email là bắt buộc/i)).toBeOnTheScreen();
+    expect(screen.getByText(/Mật khẩu là bắt buộc/i)).toBeOnTheScreen();
   });
 
   it('should display matching error when email is invalid', async () => {
@@ -37,8 +39,8 @@ describe('loginForm Form ', () => {
     await user.type(passwordInput, 'test');
     await user.press(button);
 
-    expect(await screen.findByText(/Invalid Email Format/i)).toBeOnTheScreen();
-    expect(screen.queryByText(/Email is required/i)).not.toBeOnTheScreen();
+    expect(await screen.findByText(/Email không hợp lệ/i)).toBeOnTheScreen();
+    expect(screen.queryByText(/Email là bắt buộc/i)).not.toBeOnTheScreen();
   });
 
   it('should call LoginForm with correct values when values are valid', async () => {
@@ -54,12 +56,30 @@ describe('loginForm Form ', () => {
     await waitFor(() => {
       expect(onSubmitMock).toHaveBeenCalledTimes(1);
     });
-    // expect.objectContaining({}) because we don't want to test the target event we are receiving from the onSubmit function
     expect(onSubmitMock).toHaveBeenCalledWith(
       expect.objectContaining({
         email: 'youssef@gmail.com',
         password: 'password',
       }),
     );
+  });
+
+  it('should toggle password visibility', async () => {
+    const { user } = setup(<LoginForm />);
+
+    const toggleButton = screen.getByTestId('password-input-toggle-visibility');
+    expect(toggleButton).toBeOnTheScreen();
+
+    // Password should be hidden by default (secureTextEntry)
+    const passwordInput = screen.getByTestId('password-input');
+    expect(passwordInput.props.secureTextEntry).toBe(true);
+
+    // Toggle to show password
+    await user.press(toggleButton);
+    expect(screen.getByTestId('password-input').props.secureTextEntry).toBe(false);
+
+    // Toggle back to hide
+    await user.press(toggleButton);
+    expect(screen.getByTestId('password-input').props.secureTextEntry).toBe(true);
   });
 });

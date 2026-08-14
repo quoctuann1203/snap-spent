@@ -21,8 +21,21 @@ export function LinearGradient({
   ...props
 }: Props) {
   return (
-    <View style={[styles.container, style]} className={className} {...props}>
-      <Svg style={StyleSheet.absoluteFillObject} width="100%" height="100%">
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: colors[0] || '#161826' },
+        style,
+      ]}
+      className={className}
+      {...props}
+    >
+      <Svg
+        style={StyleSheet.absoluteFillObject}
+        width="100%"
+        height="100%"
+        preserveAspectRatio="none"
+      >
         <Defs>
           <SvgGradient
             id="snapspent-linear-grad"
@@ -40,7 +53,7 @@ export function LinearGradient({
             ))}
           </SvgGradient>
         </Defs>
-        <Rect width="100%" height="100%" fill="url(#snapspent-linear-grad)" />
+        <Rect x="0" y="0" width="100%" height="100%" fill="url(#snapspent-linear-grad)" />
       </Svg>
       {children}
     </View>
@@ -49,6 +62,9 @@ export function LinearGradient({
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
     position: 'relative',
     overflow: 'hidden',
   },
