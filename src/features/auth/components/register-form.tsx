@@ -21,6 +21,11 @@ import { FormField } from './shared/form-field';
 import { SocialButtons } from './shared/social-buttons';
 
 const schema = z.object({
+  name: z
+    .string({
+      message: 'validation.nameRequired',
+    })
+    .min(1, 'validation.nameRequired'),
   email: z
     .string({
       message: 'validation.emailRequired',
@@ -35,13 +40,13 @@ const schema = z.object({
     .min(6, 'validation.passwordMin'),
 });
 
-export type FormType = z.infer<typeof schema>;
+export type RegisterFormType = z.infer<typeof schema>;
 
-export type LoginFormProps = {
-  onSubmit?: (data: FormType) => void;
+export type RegisterFormProps = {
+  onSubmit?: (data: RegisterFormType) => void;
 };
 
-export function LoginForm({ onSubmit = () => {} }: LoginFormProps) {
+export function RegisterForm({ onSubmit = () => {} }: RegisterFormProps) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { t } = useTranslation();
@@ -49,6 +54,7 @@ export function LoginForm({ onSubmit = () => {} }: LoginFormProps) {
 
   const form = useForm({
     defaultValues: {
+      name: '',
       email: '',
       password: '',
     },
@@ -79,10 +85,10 @@ export function LoginForm({ onSubmit = () => {} }: LoginFormProps) {
           showsVerticalScrollIndicator={false}
         >
           <AuthHeader
-            title={t('auth.login.title')}
-            linkText={t('auth.login.noAccount')}
-            linkLabel={t('auth.login.createAccount')}
-            onLinkPress={() => router.push('/(auth)/register')}
+            title={t('auth.register.title')}
+            linkText={t('auth.register.hasAccount')}
+            linkLabel={t('auth.register.loginLink')}
+            onLinkPress={() => router.back()}
           />
 
           {/* Form Section */}
@@ -90,6 +96,23 @@ export function LoginForm({ onSubmit = () => {} }: LoginFormProps) {
             className="flex-1 rounded-t-3xl bg-app-bg/60 px-7 pt-7"
             style={{ paddingBottom: Math.max(insets.bottom + 16, 32) }}
           >
+            {/* Name Field */}
+            <form.Field
+              name="name"
+              children={field => (
+                <FormField
+                  testID="name-input"
+                  label={t('form.name')}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChangeText={field.handleChange}
+                  placeholder={t('form.namePlaceholder')}
+                  autoCapitalize="words"
+                  error={getFieldError(field) ? t(getFieldError(field) as string) : undefined}
+                />
+              )}
+            />
+
             {/* Email Field */}
             <form.Field
               name="email"
@@ -125,8 +148,8 @@ export function LoginForm({ onSubmit = () => {} }: LoginFormProps) {
               )}
             />
 
-            {/* Remember me + Forgot password */}
-            <View className="mb-6 flex-row items-center justify-between">
+            {/* Remember me */}
+            <View className="mb-6">
               <Checkbox
                 checked={rememberMe}
                 onChange={setRememberMe}
@@ -135,22 +158,14 @@ export function LoginForm({ onSubmit = () => {} }: LoginFormProps) {
                 accessibilityLabel={t('form.rememberMe')}
                 testID="remember-me"
               />
-              <Pressable
-                onPress={() => console.log('Forgot password')}
-                hitSlop={8}
-              >
-                <Text className="text-sm font-medium text-accent">
-                  {t('form.forgotPassword')}
-                </Text>
-              </Pressable>
             </View>
 
-            {/* Login Button - Filled accent for strong visual hierarchy */}
+            {/* Register Button - Filled accent for strong visual hierarchy */}
             <form.Subscribe
               selector={state => [state.isSubmitting]}
               children={([isSubmitting]) => (
                 <Pressable
-                  testID="login-button"
+                  testID="register-button"
                   onPress={form.handleSubmit}
                   disabled={isSubmitting}
                   className={`mb-6 items-center justify-center rounded-[14px] bg-accent py-3.5 ${
@@ -161,10 +176,10 @@ export function LoginForm({ onSubmit = () => {} }: LoginFormProps) {
                   })}
                 >
                   <Text
-                    testID="login-button-label"
+                    testID="register-button-label"
                     className="text-base font-semibold text-app-bg"
                   >
-                    {t('auth.login.button')}
+                    {t('auth.register.button')}
                   </Text>
                 </Pressable>
               )}

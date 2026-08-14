@@ -121,9 +121,9 @@ function CheckboxBase({
   checked = false,
   testID,
   label,
-
+  labelClasses,
   ...props
-}: RootProps & { label?: string }) {
+}: RootProps & { label?: string; labelClasses?: string }) {
   return (
     <CheckboxRoot checked={checked} testID={testID} {...props}>
       <CheckboxIcon checked={checked} />
@@ -132,7 +132,7 @@ function CheckboxBase({
             <Label
               text={label}
               testID={testID ? `${testID}-label` : undefined}
-              className="pr-2"
+              className={`pr-2 ${labelClasses || ''}`}
             />
           )
         : null}

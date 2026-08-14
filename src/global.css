@@ -101,6 +101,46 @@
 
   --color-destructive: #ef4444;
   --color-destructive-foreground: #ffffff;
+
+  /* Nocturne design system — from tokens.js */
+  --color-app-bg: #161826;
+  --color-app-surface: #232532;
+  --color-app-text: #e9e9ed;
+  --color-app-divider: rgba(233, 233, 237, 0.16);
+
+  --color-accent: #9184d9;
+  --color-accent2: #a7a1db;
+
+  --color-accent-ramp-100: #f5f4ff;
+  --color-accent-ramp-200: #e7e5fe;
+  --color-accent-ramp-300: #d2cefd;
+  --color-accent-ramp-400: #b5abfc;
+  --color-accent-ramp-500: #968ae0;
+  --color-accent-ramp-600: #796cbf;
+  --color-accent-ramp-700: #5d5294;
+  --color-accent-ramp-800: #423a6a;
+  --color-accent-ramp-900: #2b2741;
+
+  --color-accent2-ramp-100: #f5f4ff;
+  --color-accent2-ramp-200: #e7e5fe;
+  --color-accent2-ramp-300: #d2cefd;
+  --color-accent2-ramp-400: #b5afe8;
+  --color-accent2-ramp-500: #9690c9;
+  --color-accent2-ramp-600: #7972a9;
+  --color-accent2-ramp-700: #5c5783;
+  --color-accent2-ramp-800: #423e5d;
+  --color-accent2-ramp-900: #2b293a;
+
+  /* Nocturne neutral palette (separate from default neutral) */
+  --color-nocturne-100: #f3f5fe;
+  --color-nocturne-200: #e4e7f5;
+  --color-nocturne-300: #cfd3e5;
+  --color-nocturne-400: #b2b6ca;
+  --color-nocturne-500: #9397ab;
+  --color-nocturne-600: #75798c;
+  --color-nocturne-700: #595d6c;
+  --color-nocturne-800: #3f424d;
+  --color-nocturne-900: #292b31;
 }
 
 /* Dark mode colors */

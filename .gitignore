@@ -20,3 +20,6 @@ yarn-error.log
 .env.*.local
 
 expo-env.d.ts
+
+.agents/
+.claude/
