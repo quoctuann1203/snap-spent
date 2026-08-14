@@ -34,6 +34,10 @@ SplashScreen.setOptions({
 });
 
 export default function RootLayout() {
+  React.useEffect(() => {
+    SplashScreen.hideAsync();
+  }, []);
+
   return (
     <Providers>
       <Stack>
