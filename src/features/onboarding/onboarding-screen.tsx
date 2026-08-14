@@ -1,11 +1,10 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { Camera, Grid2x2, Sparkles } from 'lucide-react-native';
 import * as React from 'react';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { FocusAwareStatusBar } from '@/components/ui';
+import { FocusAwareStatusBar, LinearGradient } from '@/components/ui';
 import { Button } from '@/components/ui/button';
 import { useIsFirstTime } from '@/lib/hooks';
 import { colors } from '@/lib/theme/tokens';
